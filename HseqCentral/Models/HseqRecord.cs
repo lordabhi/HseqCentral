@@ -8,6 +8,22 @@ namespace HseqCentral.Models
 {
     public abstract class HseqRecord
     {
+        public HseqRecord() {
+
+            this.LinkedRecords = new HashSet<HseqRecord>();
+        }
+
+        public HseqRecord(HseqRecord record)
+        {
+            this.AlfrescoNoderef = record.AlfrescoNoderef;
+            this.Title = record.Title;
+            this.Description = record.Description;
+            this.HseqCaseFile = record.HseqCaseFile;
+            this.HseqCaseFileID = record.HseqCaseFileID;
+            this.HseqRecordID = record.HseqRecordID;
+        }
+
+
         [Key]
         public int HseqRecordID { get; set; }
 
@@ -27,11 +43,12 @@ namespace HseqCentral.Models
 
         public String QualityCoordinator { get; set; }
 
-        /////////////////////////////////////////////////////////////////
 
-       // public virtual IEnumerable<HseqRecord> LinkedRecords { get; set; }
+        public Nullable<int> MainRecordId { get; set; }
+        public virtual ICollection<HseqRecord> LinkedRecords { get; set; }
+        public virtual HseqRecord MainRecord { get; set; }
 
-        /////////////////////////////////////////////////////////////////
+        
         public int? HseqCaseFileID { get; set; }
 
         public virtual HseqCaseFile HseqCaseFile { get; set; }

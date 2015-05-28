@@ -75,6 +75,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.MainRecordId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MainRecordId)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Category)
         </dt>
 
@@ -87,4 +95,10 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.HseqRecordID }) |
     @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Create NCR", "CreateLinked", "Ncrs",
+        new
+        {
+            recordId = Model.HseqRecordID
+        },
+        null)
 </p>

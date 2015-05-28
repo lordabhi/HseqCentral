@@ -7,6 +7,12 @@ namespace HseqCentral.Models
 {
     public class Ncr : HseqRecord
     {
+        public Ncr(){}
+
+        public Ncr(HseqRecord hseqRecord): base(hseqRecord) 
+        {
+
+        }
 
         public NcrSource NcrSource { get; set; }
 

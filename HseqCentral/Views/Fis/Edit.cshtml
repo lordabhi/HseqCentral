@@ -74,6 +74,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.MainRecordId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MainRecordId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MainRecordId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.HseqCaseFileID, "HseqCaseFileID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("HseqCaseFileID", null, htmlAttributes: new { @class = "form-control" })

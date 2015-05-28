@@ -39,9 +39,44 @@ namespace HseqCentral.Controllers
         // GET: Ncrs/Create
         public ActionResult Create()
         {
+            ViewBag.RecordType = RecordType.NCR;
+            ViewBag.EnteredBy = "Test User";
+            ViewBag.ReportedBy = "Test User, Sales";
+            ViewBag.QualityCoordinator = "Mr. Paul Smith";
+            ViewBag.Status = "Pending";
+
             ViewBag.HseqCaseFileID = new SelectList(db.HseqCaseFiles, "HseqCaseFileID", "HseqCaseFileID");
             ViewBag.DiscrepancyTypeID = new SelectList(db.DiscrepancyTypes, "DiscrepancyTypeID", "Name");
             return View();
+        }
+
+        
+        public ActionResult CreateLinked(int recordId)
+        {
+            HseqRecord record = db.FisRecords.Find(recordId);
+            Ncr ncr = new Ncr(record);
+            record.LinkedRecords.Add(ncr);
+
+            ViewBag.HseqCaseFileID = new SelectList(db.HseqCaseFiles, "HseqCaseFileID", "HseqCaseFileID");
+            ViewBag.DiscrepancyTypeID = new SelectList(db.DiscrepancyTypes, "DiscrepancyTypeID", "Name");
+            return View("Create", ncr);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateLinked(Ncr ncr)
+        {
+            if (ModelState.IsValid)
+            {
+                db.NcrRecords.Add(ncr);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.HseqCaseFileID = new SelectList(db.HseqCaseFiles, "HseqCaseFileID", "HseqCaseFileID", ncr.HseqCaseFileID);
+            ViewBag.DiscrepancyTypeID = new SelectList(db.DiscrepancyTypes, "DiscrepancyTypeID", "Name", ncr.DiscrepancyTypeID);
+            return View(ncr);
         }
 
         // POST: Ncrs/Create
